@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,14 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@TeleOp(name="Real Tank Drive", group="Real Drives")
-
+@TeleOp(name="Real Tank Drive")
 public class tankDrive extends OpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
-
     private DcMotor leftFront = null;
     private DcMotor leftBack = null;
     private DcMotor rightFront = null;
@@ -26,12 +23,16 @@ public class tankDrive extends OpMode{
 
         telemetry.addData("Starting robot", "Skynet override success");
 
+        leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+        leftBack = hardwareMap.get(DcMotor.class, "leftBack");
+        rightBack = hardwareMap.get(DcMotor.class, "rightBack");
+        rightFront = hardwareMap.get(DcMotor.class, "rightFront");
 
 
-        leftFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotor.Direction.FORWARD);
+        leftBack.setDirection(DcMotor.Direction.FORWARD);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightBack.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Skynet Initialized", "May your last moments be unhappy");
 
@@ -51,7 +52,7 @@ public class tankDrive extends OpMode{
         double rightPower;
 
         double leftDrive = gamepad1.left_stick_y;
-        double rightDrive = gamepad1.right_stick_x;
+        double rightDrive = gamepad1.right_stick_y;
 
         leftPower = Range.clip(leftDrive, -1.0, 1.0);
         rightPower = Range.clip(rightDrive, -1.0, 1.0);
@@ -65,6 +66,11 @@ public class tankDrive extends OpMode{
         telemetry.addData("Time spent fleeing:", " " + runtime.toString());
         telemetry.addData("Stats", "");
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+
+    }
+
+    @Override
+    public void stop(){
 
     }
 }
