@@ -49,8 +49,10 @@ public class tankDrive extends OpMode{
     @Override
     public void loop() {
         //defining a power variable
-        double leftPower;
-        double rightPower;
+        double leftFrontPower;
+        double leftBackPower;
+        double rightFrontPower;
+        double rightBackPower;
         double tablePower;
         //get inputs from bumpers
         boolean leftBumper = gamepad1.left_bumper;
@@ -59,7 +61,8 @@ public class tankDrive extends OpMode{
         //get inputs from stick
         double leftDrive = gamepad1.left_stick_y;
         double rightDrive = gamepad1.right_stick_y;
-
+        float leftDrift = gamepad1.left_trigger;
+        float rightDrift = gamepad1.right_trigger;
         //bumpers override the sticks if they are pressed
         if(leftBumper){
             leftDrive = 1;
@@ -74,19 +77,29 @@ public class tankDrive extends OpMode{
             tablePower = 0;
         }
         //sets power level
-        leftPower = Range.clip(leftDrive, -1.0, 1.0);
-        rightPower = Range.clip(rightDrive, -1.0, 1.0);
+        leftFrontPower = Range.clip(leftDrive, -1.0, 1.0);
+        leftBackPower = Range.clip(rightDrive, -1.0, 1.0);
+        rightFrontPower = Range.clip(rightDrive, -1.0, 1.0);
+        rightBackPower = Range.clip(rightDrive, -1.0, 1.0);
+
+        if (leftDrift > 0.1){
+            leftBackPower = leftBackPower*leftDrift;
+        }
+        if(rightDrift > 0.1){
+            rightBackPower = rightBackPower*rightDrift;
+        }
+
 
         //gives power to the wheels
-        leftFront.setPower(leftPower);
-        leftBack.setPower(leftPower);
-        rightFront.setPower(rightPower);
-        rightBack.setPower(rightPower);
+        leftFront.setPower(leftFrontPower);
+        leftBack.setPower(leftBackPower);
+        rightFront.setPower(rightFrontPower);
+        rightBack.setPower(rightBackPower);
         turnTable.setPower(tablePower);
         //data
         telemetry.addData("Time spent fleeing:", " " + runtime.toString());
         telemetry.addData("Stats", "");
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
+        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftFrontPower, rightFrontPower);
 
     }
 
