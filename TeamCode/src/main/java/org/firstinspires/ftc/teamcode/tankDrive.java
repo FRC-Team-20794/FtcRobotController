@@ -83,10 +83,10 @@ public class tankDrive extends OpMode{
         rightBackPower = Range.clip(rightDrive, -1.0, 1.0);
 
         if (leftDrift > 0.1){
-            leftBackPower = leftBackPower*leftDrift;
+            leftBackPower = 0;
         }
         if(rightDrift > 0.1){
-            rightBackPower = rightBackPower*rightDrift;
+            rightBackPower = 0;
         }
 
 
