@@ -56,6 +56,7 @@ public class omniSquare extends OpMode{
 
         telemetry.addData(String.valueOf(gamepad1.left_stick_y), String.valueOf(gamepad1.left_stick_x));
 
+
         if(clockTurn){
             frontPower = 1;
             backPower = -1;
