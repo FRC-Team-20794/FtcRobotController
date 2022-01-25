@@ -49,15 +49,28 @@ public class mecanumDrive extends OpMode{
         //defined variables
         double backSlash;
         double forwardSlash;
+        double bow;
+        double stern;
 
         //getting stick inputs
         backSlash = (-1*(gamepad1.left_stick_y)) + gamepad1.left_stick_x;
         forwardSlash = gamepad1.left_stick_y + (-1*(gamepad1.left_stick_x));
 
-        frontLeft.setPower(backSlash);
-        frontRight.setPower(forwardSlash);
-        backLeft.setPower(forwardSlash);
-        backRight.setPower(backSlash);
+
+        //setting power and priorities
+        if(gamepad1.right_stick_x == 0){
+            frontLeft.setPower(backSlash);
+            backRight.setPower(backSlash);
+            frontRight.setPower(forwardSlash);
+            backLeft.setPower(forwardSlash);
+        }
+        else{
+            frontLeft.setPower(bow);
+            backLeft.setPower(bow);
+            frontRight.setPower(stern);
+            backRight.setPower(stern);
+        }
+
 
         telemetry.addData("Startup complete", " ");
 
