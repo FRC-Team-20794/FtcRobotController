@@ -73,17 +73,17 @@ public class trueTankDrive extends OpMode{
             tablePower = 0;
         }
         if(xButton){
-            leftServoInc += 0.1;
+            leftServoInc += 0.001;
         }
         else{
-            leftServoInc -= 0.1;
+            leftServoInc -= 0.001;
         }
 
         //sets power level
         leftPower = Range.clip(leftDrive, -1.0, 1.0);
         rightPower = Range.clip(rightDrive, -1.0, 1.0);
         //TEST THIS FIRST, UNTESTED AND WILL MOST LIKELY BURN OUT SERVO
-        grabberLeft.setPosition(Range.clip(leftServoInc, 0, 0.1));
+        grabberLeft.setPosition(Range.clip(leftServoInc, 0, 0.9));
         //gives power to the wheels
         left.setPower(leftPower);
         right.setPower(rightPower);
