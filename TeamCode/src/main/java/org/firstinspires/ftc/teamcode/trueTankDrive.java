@@ -92,7 +92,7 @@ public class trueTankDrive extends OpMode{
         telemetry.addData("Time spent fleeing:", " " + runtime.toString());
         telemetry.addData("Stats", "");
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-
+        telemetry.addData("testing", "(%.2f)", left.getCurrentPosition());
     }
 
     @Override
