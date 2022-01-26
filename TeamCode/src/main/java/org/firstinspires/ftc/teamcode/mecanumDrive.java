@@ -53,10 +53,10 @@ public class mecanumDrive extends OpMode{
         double backStarboard;
 
         //getting stick inputs + right stick directional drift
-        frontPort = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 2));
-        frontStarboard = (((gamepad1.left_stick_y + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 2));
-        backPort = (((gamepad1.left_stick_y + (gamepad1.left_stick_x)) + gamepad1.right_stick_x) / 2);
-        backStarboard = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + gamepad1.right_stick_x) / 2);
+        frontPort = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 3));
+        frontStarboard = (((gamepad1.left_stick_y + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 3));
+        backPort = (((gamepad1.left_stick_y + (gamepad1.left_stick_x)) + gamepad1.right_stick_x) / 3);
+        backStarboard = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + gamepad1.right_stick_x) / 3);
 
         //setting power and priorities
             frontLeft.setPower(frontPort);
