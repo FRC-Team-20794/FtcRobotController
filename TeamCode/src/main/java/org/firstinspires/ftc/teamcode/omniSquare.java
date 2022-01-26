@@ -15,6 +15,7 @@ public class omniSquare extends OpMode{
     private DcMotor back = null;
     private DcMotor left = null;
     private DcMotor right = null;
+    int position = 0;
 
 
 
@@ -74,6 +75,18 @@ public class omniSquare extends OpMode{
         back.setPower(Range.clip(backPower, 1.0, -1.0));
         left.setPower(Range.clip(leftPower, -1.0, 1.0));
         right.setPower(Range.clip(rightPower, -1.0, 1.0));
+
+        //EXPERIMENTAL
+        int lastPostition = position;
+        position = front.getCurrentPosition();
+
+        if(lastPostition > position ){
+            //going backwards
+        }
+        if((lastPostition-position)>180){
+            //made full rotation
+
+        }
 
 
 
