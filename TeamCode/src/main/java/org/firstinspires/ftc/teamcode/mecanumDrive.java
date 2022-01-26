@@ -47,32 +47,22 @@ public class mecanumDrive extends OpMode{
     public void loop(){
 
         //defined variables
-        double backSlash;
-        double forwardSlash;
-        double port;
-        double starboard;
+        double frontPort;
+        double frontStarboard;
+        double backPort;
+        double backStarboard;
 
-        //getting stick inputs
-        backSlash = (-1*(gamepad1.left_stick_y)) + gamepad1.left_stick_x;
-        forwardSlash = gamepad1.left_stick_y + (-1*(gamepad1.left_stick_x));
-        port = gamepad1.right_stick_x;
-        starboard = (-1*(gamepad1.right_stick_x));
+        //getting stick inputs + right stick directional drift
+        frontPort = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 2));
+        frontStarboard = (((gamepad1.left_stick_y + gamepad1.left_stick_x) + gamepad1.right_stick_x) / 2);
+        backPort = (((gamepad1.left_stick_y + gamepad1.left_stick_x) + gamepad1.right_stick_x) / 2);
+        backStarboard = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 2));
 
         //setting power and priorities
-        if(gamepad1.right_stick_x == 0){
-            frontLeft.setPower(backSlash);
-            backRight.setPower(backSlash);
-            frontRight.setPower(forwardSlash);
-            backLeft.setPower(forwardSlash);
-        }
-        else{
-            frontLeft.setPower(-1*(port));
-            backLeft.setPower(port);
-            frontRight.setPower(starboard);
-            backRight.setPower(-1*(starboard));
-        }
-
-
+            frontLeft.setPower(frontPort);
+            frontRight.setPower(frontStarboard);
+            backLeft.setPower(backPort);
+            backRight.setPower(backStarboard);
 
         telemetry.addData("Startup complete", " ");
 
