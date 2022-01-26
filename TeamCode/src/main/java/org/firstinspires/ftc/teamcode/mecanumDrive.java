@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Mecanum Drive", group = "mecanum drive")
 
@@ -47,18 +48,36 @@ public class mecanumDrive extends OpMode{
     public void loop(){
 
         //defined variables
+        double frontPort1;
+        double frontStarboard1;
+        double backPort1;
+        double backStarboard1;
+        double frontPort2;
+        double frontStarboard2;
+        double backPort2;
+        double backStarboard2;
         double frontPort;
         double frontStarboard;
         double backPort;
         double backStarboard;
 
         //getting stick inputs + right stick directional drift
-        frontPort = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 3));
-        frontStarboard = (((gamepad1.left_stick_y + (gamepad1.left_stick_x)) + (-1*(gamepad1.right_stick_x)) / 3));
-        backPort = (((gamepad1.left_stick_y + (gamepad1.left_stick_x)) + gamepad1.right_stick_x) / 3);
-        backStarboard = (((-1*(gamepad1.left_stick_y) + (gamepad1.left_stick_x)) + gamepad1.right_stick_x) / 3);
+        frontPort1 = (-1*(gamepad1.left_stick_y) + gamepad1.left_stick_x);
+        frontStarboard1 = (gamepad1.left_stick_y + gamepad1.right_stick_x);
+        backPort1 = (gamepad1.left_stick_y + gamepad1.right_stick_x);
+        backStarboard1 = (-1*(gamepad1.left_stick_y) + gamepad1.left_stick_x);
 
-        //setting power and priorities
+        frontPort2 = (-1*(gamepad1.right_stick_x));
+        frontStarboard2 = (-1*(gamepad1.right_stick_x));
+        backPort2 = gamepad1.right_stick_x;
+        backStarboard2 = gamepad1.right_stick_x;
+
+        //setting power max of driving and drift
+            frontPort = (Range.clip(frontPort1, -0.8, 0.8) + Range.clip(frontPort2, -0.2, 0.2));
+            frontStarboard = (Range.clip(frontStarboard1, -0.8, 0.8) + Range.clip(frontStarboard2, -0.2, 0.2));
+            backPort = (Range.clip(backPort1, -0.8, 0.8) + Range.clip(backPort2, -0.2, 0.2));
+            backStarboard = (Range.clip(backStarboard1, -0.8, 0.8) + Range.clip(backStarboard2, -0.2, 0.2));
+
             frontLeft.setPower(frontPort);
             frontRight.setPower(frontStarboard);
             backLeft.setPower(backPort);
