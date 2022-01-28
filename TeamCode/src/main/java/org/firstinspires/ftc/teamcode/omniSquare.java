@@ -126,8 +126,18 @@ public class omniSquare extends OpMode{
             backTotalDegrees += backCurrentPosition - backLastPostition;
         }
 
-        double totalDistance = ((frontTotalDegrees-backTotalDegrees)/encoderTick*360)*pi*diameter;
-        double turnedOffset = totalDistance/(wheelbase*pi)*360;
+        double totalDistance = (frontTotalDegrees-backTotalDegrees)*2*pi*pi*diameter/encoderTick;
+        double turnedOffset = totalDistance/(wheelbase*pi)*2*pi;
+
+        double leftAdjusted = yInput*Math.cos(turnedOffset);
+        double fowardAdjusted = xInput*Math.sin(turnedOffset);
+
+        double xOffset = leftPower*Math.sin(turnedOffset);
+        double xcorrect = xOffset/Math.cos(turnedOffset);//=xoffset
+
+        double ycorrect = yInput*Math.tan(turnedOffset);
+
+
 
     }
 
