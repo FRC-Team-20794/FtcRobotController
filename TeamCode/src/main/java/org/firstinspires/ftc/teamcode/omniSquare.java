@@ -10,12 +10,24 @@ import com.qualcomm.robotcore.util.Range;
 public class omniSquare extends OpMode{
 
 
+    //CONFIG(inches)
+
+    int wheelbase = 14;
+    int diameter = 6;
+    int encoderTick = 360;
+    //encoder tick should be the amount of ticks it takes for the encoder to wrap back to 0.
+
+    //CONFIG END
 
     private DcMotor front = null;
     private DcMotor back = null;
     private DcMotor left = null;
     private DcMotor right = null;
-    int position = 0;
+    int frontCurrentPosition = 0;
+    int frontTotalDegrees = 0;
+    int backCurrentPosition = 0;
+    int backTotalDegrees = 0;
+    double pi = Math.PI;
 
 
 
@@ -27,10 +39,17 @@ public class omniSquare extends OpMode{
         left = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
 
+
         front.setDirection(DcMotor.Direction.FORWARD);
         back.setDirection(DcMotor.Direction.REVERSE);
         left.setDirection(DcMotor.Direction.FORWARD);
         right.setDirection(DcMotor.Direction.REVERSE);
+
+        front.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
     }
 
@@ -39,6 +58,11 @@ public class omniSquare extends OpMode{
     }
 
     public void start(){
+
+        front.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        back.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
@@ -77,18 +101,33 @@ public class omniSquare extends OpMode{
         right.setPower(Range.clip(rightPower, -1.0, 1.0));
 
         //EXPERIMENTAL
-        int lastPostition = position;
-        position = front.getCurrentPosition();
+        int frontLastPostition = frontCurrentPosition;
+        int frontCurrentPosition = front.getCurrentPosition();
+        int backLastPostition = backCurrentPosition;
+        int backCurrentPosition = back.getCurrentPosition();
 
-        if(lastPostition > position ){
-            //going backwards
-        }
-        if((lastPostition-position)>180){
+
+        if((frontLastPostition - frontCurrentPosition)>encoderTick/2){
             //made full rotation
-
+            frontTotalDegrees += frontCurrentPosition - frontLastPostition + encoderTick;//equalize for degree-tick
+        }
+        else{
+            //edit for ticks-degrees
+            frontTotalDegrees += frontCurrentPosition - frontLastPostition;
         }
 
+        //back
+        if((backLastPostition - backCurrentPosition)>encoderTick/2){
+            //made full rotation
+            backTotalDegrees += backCurrentPosition - backLastPostition + encoderTick;//equalize for degree-tick
+        }
+        else{
+            //edit for ticks-degrees
+            backTotalDegrees += backCurrentPosition - backLastPostition;
+        }
 
+        double totalDistance = ((frontTotalDegrees-backTotalDegrees)/encoderTick*360)*pi*diameter;
+        double turnedOffset = totalDistance/(wheelbase*pi)*360;
 
     }
 
