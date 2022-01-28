@@ -13,6 +13,7 @@ public class mecanumDrive extends OpMode{
     private DcMotor frontRight = null;
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
+    private DcMotor turnTable = null;
 
     public void init() {
 
@@ -22,6 +23,7 @@ public class mecanumDrive extends OpMode{
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
+        turnTable = hardwareMap.get(DcMotor.class, "turnTable");
 
         telemetry.addData("Motors starting up", " ");
 
@@ -29,6 +31,7 @@ public class mecanumDrive extends OpMode{
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         backRight.setDirection(DcMotor.Direction.REVERSE);
+        turnTable.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Motors online", " ");
 
@@ -60,6 +63,8 @@ public class mecanumDrive extends OpMode{
         double frontStarboard;
         double backPort;
         double backStarboard;
+        boolean ducks = gamepad2.right_bumper;
+        double ducks2;
 
         //getting stick inputs + right stick directional drift
         frontPort1 = (gamepad1.left_stick_y + gamepad1.left_stick_x);
@@ -82,6 +87,16 @@ public class mecanumDrive extends OpMode{
             frontRight.setPower(frontStarboard);
             backLeft.setPower(backPort);
             backRight.setPower(backStarboard);
+
+        if(ducks){
+            ducks2 = 1.0;
+        }
+
+        else{
+            ducks2 = 0.0;
+        }
+
+            turnTable.setPower(ducks2);
 
         telemetry.addData("Startup complete", " ");
 
