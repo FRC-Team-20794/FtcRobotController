@@ -25,10 +25,10 @@ public class mecanumDrive extends OpMode{
 
         telemetry.addData("Motors starting up", " ");
 
-        frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.REVERSE);
-        backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Motors online", " ");
 
@@ -62,15 +62,15 @@ public class mecanumDrive extends OpMode{
         double backStarboard;
 
         //getting stick inputs + right stick directional drift
-        frontPort1 = (-1*(gamepad1.left_stick_y) + gamepad1.left_stick_x);
-        frontStarboard1 = (gamepad1.left_stick_y + gamepad1.right_stick_x);
-        backPort1 = (gamepad1.left_stick_y + gamepad1.right_stick_x);
-        backStarboard1 = (-1*(gamepad1.left_stick_y) + gamepad1.left_stick_x);
+        frontPort1 = (gamepad1.left_stick_y + gamepad1.left_stick_x);
+        frontStarboard1 = (-1*(gamepad1.left_stick_y + gamepad1.right_stick_x));
+        backPort1 = (-1*(gamepad1.left_stick_y + gamepad1.right_stick_x));
+        backStarboard1 = (gamepad1.left_stick_y + gamepad1.left_stick_x);
 
-        frontPort2 = (-1*(gamepad1.right_stick_x));
-        frontStarboard2 = (-1*(gamepad1.right_stick_x));
-        backPort2 = gamepad1.right_stick_x;
-        backStarboard2 = gamepad1.right_stick_x;
+        frontPort2 = (gamepad1.right_stick_x);
+        frontStarboard2 = (gamepad1.right_stick_x);
+        backPort2 = (-1*(gamepad1.right_stick_x));
+        backStarboard2 = (-1*(gamepad1.right_stick_x));
 
         //setting power max of driving and drift
             frontPort = (Range.clip(frontPort1, -0.8, 0.8) + Range.clip(frontPort2, -0.2, 0.2));
