@@ -15,8 +15,14 @@ public class omniSquare extends OpMode{
     private DcMotor back = null;
     private DcMotor left = null;
     private DcMotor right = null;
-    int position = 0;
-
+    int frontCurrentPosition = 0;
+    int frontTotalDegrees = 0;
+    int backCurrentPosition = 0;
+    int backTotalDegrees = 0;
+    int leftCurrentPosition = 0;
+    int leftTotalDegrees = 0;
+    int rightCurrentPosition = 0;
+    int rightTotalDegrees = 0;
 
 
     public void init(){
@@ -27,10 +33,17 @@ public class omniSquare extends OpMode{
         left = hardwareMap.get(DcMotor.class, "left");
         right = hardwareMap.get(DcMotor.class, "right");
 
+
         front.setDirection(DcMotor.Direction.FORWARD);
         back.setDirection(DcMotor.Direction.REVERSE);
         left.setDirection(DcMotor.Direction.FORWARD);
         right.setDirection(DcMotor.Direction.REVERSE);
+
+        front.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        back.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        left.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        right.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
     }
 
@@ -39,6 +52,11 @@ public class omniSquare extends OpMode{
     }
 
     public void start(){
+
+        front.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        back.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        left.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
@@ -77,15 +95,52 @@ public class omniSquare extends OpMode{
         right.setPower(Range.clip(rightPower, -1.0, 1.0));
 
         //EXPERIMENTAL
-        int lastPostition = position;
-        position = front.getCurrentPosition();
+        int frontLastPostition = frontCurrentPosition;
+        int frontCurrentPosition = front.getCurrentPosition();
+        int backLastPostition = backCurrentPosition;
+        int backCurrentPosition = back.getCurrentPosition();
+        int leftLastPostition = leftCurrentPosition;
+        int leftCurrentPosition = left.getCurrentPosition();
+        int rightLastPostition = rightCurrentPosition;
+        int rightCurrentPosition = right.getCurrentPosition();
 
-        if(lastPostition > position ){
-            //going backwards
-        }
-        if((lastPostition-position)>180){
+        if((frontLastPostition - frontCurrentPosition)>180){
             //made full rotation
+            frontTotalDegrees += frontCurrentPosition - frontLastPostition +360;//equalize for degree-tick
+        }
+        else{
+            //edit for ticks-degrees
+            frontTotalDegrees += frontCurrentPosition - frontLastPostition;
+        }
 
+        //back
+        if((backLastPostition - backCurrentPosition)>180){
+            //made full rotation
+            backTotalDegrees += backCurrentPosition - backLastPostition +360;//equalize for degree-tick
+        }
+        else{
+            //edit for ticks-degrees
+            backTotalDegrees += backCurrentPosition - backLastPostition;
+        }
+
+        //left
+        if((leftLastPostition - leftCurrentPosition)>180){
+            //made full rotation
+            leftTotalDegrees += leftCurrentPosition - leftLastPostition +360;//equalize for degree-tick
+        }
+        else{
+            //edit for ticks-degrees
+            leftTotalDegrees += leftCurrentPosition - leftLastPostition;
+        }
+
+        //right
+        if((rightLastPostition - rightCurrentPosition)>180){
+            //made full rotation
+            rightTotalDegrees += rightCurrentPosition - rightLastPostition +360;//equalize for degree-tick
+        }
+        else{
+            //edit for ticks-degrees
+            rightTotalDegrees += rightCurrentPosition - rightLastPostition;
         }
 
 
