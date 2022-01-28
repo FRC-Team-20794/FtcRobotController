@@ -10,6 +10,14 @@ import com.qualcomm.robotcore.util.Range;
 public class omniSquare extends OpMode{
 
 
+    //CONFIG(inches)
+
+    int wheelbase = 14;
+    int diameter = 6;
+    int encoderTick = 360;
+    //encoder tick should be the amount of ticks it takes for the encoder to wrap back to 0.
+
+    //CONFIG END
 
     private DcMotor front = null;
     private DcMotor back = null;
@@ -19,10 +27,8 @@ public class omniSquare extends OpMode{
     int frontTotalDegrees = 0;
     int backCurrentPosition = 0;
     int backTotalDegrees = 0;
-    int leftCurrentPosition = 0;
-    int leftTotalDegrees = 0;
-    int rightCurrentPosition = 0;
-    int rightTotalDegrees = 0;
+    double pi = Math.PI;
+
 
 
     public void init(){
@@ -99,14 +105,11 @@ public class omniSquare extends OpMode{
         int frontCurrentPosition = front.getCurrentPosition();
         int backLastPostition = backCurrentPosition;
         int backCurrentPosition = back.getCurrentPosition();
-        int leftLastPostition = leftCurrentPosition;
-        int leftCurrentPosition = left.getCurrentPosition();
-        int rightLastPostition = rightCurrentPosition;
-        int rightCurrentPosition = right.getCurrentPosition();
 
-        if((frontLastPostition - frontCurrentPosition)>180){
+
+        if((frontLastPostition - frontCurrentPosition)>encoderTick/2){
             //made full rotation
-            frontTotalDegrees += frontCurrentPosition - frontLastPostition +360;//equalize for degree-tick
+            frontTotalDegrees += frontCurrentPosition - frontLastPostition + encoderTick;//equalize for degree-tick
         }
         else{
             //edit for ticks-degrees
@@ -114,36 +117,17 @@ public class omniSquare extends OpMode{
         }
 
         //back
-        if((backLastPostition - backCurrentPosition)>180){
+        if((backLastPostition - backCurrentPosition)>encoderTick/2){
             //made full rotation
-            backTotalDegrees += backCurrentPosition - backLastPostition +360;//equalize for degree-tick
+            backTotalDegrees += backCurrentPosition - backLastPostition + encoderTick;//equalize for degree-tick
         }
         else{
             //edit for ticks-degrees
             backTotalDegrees += backCurrentPosition - backLastPostition;
         }
 
-        //left
-        if((leftLastPostition - leftCurrentPosition)>180){
-            //made full rotation
-            leftTotalDegrees += leftCurrentPosition - leftLastPostition +360;//equalize for degree-tick
-        }
-        else{
-            //edit for ticks-degrees
-            leftTotalDegrees += leftCurrentPosition - leftLastPostition;
-        }
-
-        //right
-        if((rightLastPostition - rightCurrentPosition)>180){
-            //made full rotation
-            rightTotalDegrees += rightCurrentPosition - rightLastPostition +360;//equalize for degree-tick
-        }
-        else{
-            //edit for ticks-degrees
-            rightTotalDegrees += rightCurrentPosition - rightLastPostition;
-        }
-
-
+        double totalDistance = ((frontTotalDegrees-backTotalDegrees)/encoderTick*360)*pi*diameter;
+        double turnedOffset = totalDistance/(wheelbase*pi)*360;
 
     }
 
