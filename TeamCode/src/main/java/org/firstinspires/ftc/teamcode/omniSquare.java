@@ -75,30 +75,13 @@ public class omniSquare extends OpMode{
         double backPower = xInput;
         double leftPower = yInput;
         double rightPower = yInput;
+        double ratio;
 
         boolean clockTurn = gamepad1.right_bumper;
         boolean countclockTurn = gamepad1.left_bumper;
 
         telemetry.addData(String.valueOf(gamepad1.left_stick_y), String.valueOf(gamepad1.left_stick_x));
 
-
-        if(clockTurn){
-            frontPower = 1;
-            backPower = -1;
-            leftPower = -1;
-            rightPower = 1;
-        }
-        if(countclockTurn){
-            frontPower = -1;
-            backPower = 1;
-            leftPower = 1;
-            rightPower = -1;
-        }
-
-        front.setPower(Range.clip(frontPower, -1.0, 1.0));
-        back.setPower(Range.clip(backPower, 1.0, -1.0));
-        left.setPower(Range.clip(leftPower, -1.0, 1.0));
-        right.setPower(Range.clip(rightPower, -1.0, 1.0));
 
         //EXPERIMENTAL
         int frontLastPostition = frontCurrentPosition;
@@ -129,15 +112,55 @@ public class omniSquare extends OpMode{
         double totalDistance = (frontTotalDegrees-backTotalDegrees)*2*pi*pi*diameter/encoderTick;
         double turnedOffset = totalDistance/(wheelbase*pi)*2*pi;
 
-        double leftAdjusted = yInput*Math.cos(turnedOffset);
-        double fowardAdjusted = xInput*Math.sin(turnedOffset);
+        double frontLastVal = 0;
+        double leftLastVal = 0;
 
-        double xOffset = leftPower*Math.sin(turnedOffset);
-        double xcorrect = xOffset/Math.cos(turnedOffset);//=xoffset
+        while(frontPower - frontLastVal <= 0.1 && leftPower - leftLastVal <= -0.1) {
 
-        double ycorrect = yInput*Math.tan(turnedOffset);
+            frontLastVal = frontPower;
+            leftLastVal = leftPower;
 
+            double xcorrect = leftPower * Math.tan(turnedOffset);
 
+            frontPower += xcorrect;
+
+            double ycorrect = frontPower * Math.tan(turnedOffset);
+
+            leftPower += ycorrect;
+
+            if(frontPower>=leftPower){
+
+                ratio = 1/frontPower;
+                frontPower = 1;
+                leftPower = frontPower*ratio;
+
+            }
+            else{
+                ratio = 1/leftPower;
+
+                frontPower = frontPower*ratio;
+                leftPower = 1;
+            }
+
+        }
+
+        if(clockTurn){
+            frontPower = 1;
+            backPower = -1;
+            leftPower = -1;
+            rightPower = 1;
+        }
+        if(countclockTurn){
+            frontPower = -1;
+            backPower = 1;
+            leftPower = 1;
+            rightPower = -1;
+        }
+
+        front.setPower(Range.clip(frontPower, -1.0, 1.0));
+        back.setPower(Range.clip(backPower, 1.0, -1.0));
+        left.setPower(Range.clip(leftPower, -1.0, 1.0));
+        right.setPower(Range.clip(rightPower, -1.0, 1.0));
 
     }
 
