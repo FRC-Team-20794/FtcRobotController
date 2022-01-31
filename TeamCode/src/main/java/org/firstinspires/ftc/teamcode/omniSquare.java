@@ -83,24 +83,6 @@ public class omniSquare extends OpMode{
         telemetry.addData(String.valueOf(gamepad1.left_stick_y), String.valueOf(gamepad1.left_stick_x));
 
 
-        if(clockTurn){
-            frontPower = 1;
-            backPower = -1;
-            leftPower = -1;
-            rightPower = 1;
-        }
-        if(countclockTurn){
-            frontPower = -1;
-            backPower = 1;
-            leftPower = 1;
-            rightPower = -1;
-        }
-
-        front.setPower(Range.clip(frontPower, -1.0, 1.0));
-        back.setPower(Range.clip(backPower, 1.0, -1.0));
-        left.setPower(Range.clip(leftPower, -1.0, 1.0));
-        right.setPower(Range.clip(rightPower, -1.0, 1.0));
-
         //EXPERIMENTAL
         int frontLastPostition = frontCurrentPosition;
         int frontCurrentPosition = front.getCurrentPosition();
@@ -161,6 +143,25 @@ public class omniSquare extends OpMode{
             }
 
         }
+
+        if(clockTurn){
+            frontPower = 1;
+            backPower = -1;
+            leftPower = -1;
+            rightPower = 1;
+        }
+        if(countclockTurn){
+            frontPower = -1;
+            backPower = 1;
+            leftPower = 1;
+            rightPower = -1;
+        }
+
+        front.setPower(Range.clip(frontPower, -1.0, 1.0));
+        back.setPower(Range.clip(backPower, 1.0, -1.0));
+        left.setPower(Range.clip(leftPower, -1.0, 1.0));
+        right.setPower(Range.clip(rightPower, -1.0, 1.0));
+
     }
 
 }
