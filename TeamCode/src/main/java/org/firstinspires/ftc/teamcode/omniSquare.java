@@ -72,9 +72,9 @@ public class omniSquare extends OpMode{
         double yInput = gamepad1.left_stick_y;
 
         double frontPower = xInput;
-        double backPower = xInput;
+        double backPower;
         double leftPower = yInput;
-        double rightPower = yInput;
+        double rightPower;
         double ratio;
 
         boolean clockTurn = gamepad1.right_bumper;
@@ -143,6 +143,8 @@ public class omniSquare extends OpMode{
             }
 
         }
+        rightPower = leftPower;
+        backPower = frontPower;
 
         if(clockTurn){
             frontPower = 1;
@@ -174,7 +176,7 @@ public class omniSquare extends OpMode{
             else if (setDegree - turnedOffset < 179){
 
                 backPower -= 0.2;
-
+                rightPower -= 0.2;
 
             }
         }
