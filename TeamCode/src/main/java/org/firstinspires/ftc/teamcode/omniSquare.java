@@ -157,11 +157,32 @@ public class omniSquare extends OpMode{
             rightPower = -1;
         }
 
+
+
+        //EXPERIMENTAL
+
+        double hyp = Math.sqrt(Math.pow(gamepad1.right_stick_x, 2)+Math.pow(gamepad1.right_stick_y, 2));
+        if (hyp >= 0.9){
+
+            double setDegree = Math.asin(gamepad1.right_stick_y/hyp);
+            if(setDegree - turnedOffset > 181){
+
+                frontPower -= 0.2;
+                leftPower -= 0.2;
+
+            }
+            else if (setDegree - turnedOffset < 179){
+
+                backPower -= 0.2;
+
+
+            }
+        }
+
         front.setPower(Range.clip(frontPower, -1.0, 1.0));
         back.setPower(Range.clip(backPower, 1.0, -1.0));
         left.setPower(Range.clip(leftPower, -1.0, 1.0));
         right.setPower(Range.clip(rightPower, -1.0, 1.0));
-
     }
 
 }
