@@ -15,7 +15,7 @@ public class trueTankDrive extends OpMode{
     private DcMotor right = null;
     private DcMotor table = null;
     private Servo grabberLeft = null;
-    @Override
+
     public void init() {
 
         telemetry.addData("Starting robot", "Skynet override success");
@@ -34,15 +34,15 @@ public class trueTankDrive extends OpMode{
         telemetry.addData("Skynet Initialized", "May your last moments be unhappy");
 
     }
-    @Override
+
     public void init_loop() {
 
     }
-    @Override
+
     public void start() {
 
     }
-    @Override
+
     public void loop() {
         //defining a power variable
         double leftPower;
@@ -61,16 +61,16 @@ public class trueTankDrive extends OpMode{
 
         //bumpers override the sticks if they are pressed
         if(leftBumper){
-            leftDrive = -1;
+            leftDrive = -1.0;
         }
         if(rightBumper){
-            rightDrive = -1;
+            rightDrive = -1.0;
         }
         if(yButton){
-            tablePower = 1;
+            tablePower = 1.0;
         }
         else{
-            tablePower = 0;
+            tablePower = 0.0;
         }
         if(xButton){
             leftServoInc += 0.001;
@@ -95,7 +95,7 @@ public class trueTankDrive extends OpMode{
         telemetry.addData("testing", "(%.2f)", left.getCurrentPosition());
     }
 
-    @Override
+
     public void stop(){
 
     }
