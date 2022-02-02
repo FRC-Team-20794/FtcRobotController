@@ -15,6 +15,7 @@ public class trueTankDrive extends OpMode{
     private DcMotor right = null;
     private DcMotor table = null;
     private Servo grabberLeft = null;
+    double leftServoInc = 0.0;
 
     public void init() {
 
@@ -48,8 +49,8 @@ public class trueTankDrive extends OpMode{
         double leftPower;
         double rightPower;
         double tablePower;
-        double leftServoPosition;
-        double leftServoInc = 0;
+
+
         //get inputs from bumpers
         boolean leftBumper = gamepad1.left_bumper;
         boolean rightBumper = gamepad1.right_bumper;
@@ -83,7 +84,7 @@ public class trueTankDrive extends OpMode{
         leftPower = Range.clip(leftDrive, -1.0, 1.0);
         rightPower = Range.clip(rightDrive, -1.0, 1.0);
         //TEST THIS FIRST, UNTESTED AND WILL MOST LIKELY BURN OUT SERVO
-        grabberLeft.setPosition(Range.clip(leftServoInc, 0, 0.9));
+        grabberLeft.setPosition(Range.clip(leftServoInc, 0.0, 0.9));
         //gives power to the wheels
         left.setPower(leftPower);
         right.setPower(rightPower);
