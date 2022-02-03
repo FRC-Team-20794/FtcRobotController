@@ -112,8 +112,8 @@ public class omniSquare extends OpMode{
         double totalDistance = (frontTotalDegrees-backTotalDegrees)*2*pi*pi*diameter/encoderTick;
         double turnedOffset = totalDistance/(wheelbase*pi)*2*pi;
 
-        double frontLastVal = 0;
-        double leftLastVal = 0;
+        double frontLastVal = 0.0;
+        double leftLastVal = 00;
 
         while(frontPower - frontLastVal <= 0.1 && leftPower - leftLastVal <= -0.1) {
 
@@ -130,16 +130,16 @@ public class omniSquare extends OpMode{
 
             if(frontPower>=leftPower){
 
-                ratio = 1/frontPower;
-                frontPower = 1;
+                ratio = 1.0/frontPower;
+                frontPower = 1.0;
                 leftPower = frontPower*ratio;
 
             }
             else{
-                ratio = 1/leftPower;
+                ratio = 1.0/leftPower;
 
                 frontPower = frontPower*ratio;
-                leftPower = 1;
+                leftPower = 1.0;
             }
 
         }
@@ -147,16 +147,16 @@ public class omniSquare extends OpMode{
         backPower = frontPower;
 
         if(clockTurn){
-            frontPower = 1;
-            backPower = -1;
-            leftPower = -1;
-            rightPower = 1;
+            frontPower = 1.0;
+            backPower = -1.0;
+            leftPower = -1.0;
+            rightPower = 1.0;
         }
         if(countclockTurn){
-            frontPower = -1;
-            backPower = 1;
-            leftPower = 1;
-            rightPower = -1;
+            frontPower = -1.0;
+            backPower = 1.0;
+            leftPower = 1.0;
+            rightPower = -1.0;
         }
 
 

@@ -45,11 +45,13 @@ public class trueTankDrive extends OpMode{
     }
 
     public void loop() {
+        telemetry.addData("Crash test loop", "");
         //defining a power variable
         double leftPower;
         double rightPower;
         double tablePower;
 
+        telemetry.addData("Crash test 1", "");
 
         //get inputs from bumpers
         boolean leftBumper = gamepad1.left_bumper;
@@ -59,6 +61,8 @@ public class trueTankDrive extends OpMode{
         //get inputs from stick
         double leftDrive = gamepad1.left_stick_y;
         double rightDrive = gamepad1.right_stick_y;
+
+        telemetry.addData("Crash test 2", "");
 
         //bumpers override the sticks if they are pressed
         if(leftBumper){
@@ -80,11 +84,15 @@ public class trueTankDrive extends OpMode{
             leftServoInc -= 0.001;
         }
 
+        telemetry.addData("Crash test 3", "");
+
         //sets power level
         leftPower = Range.clip(leftDrive, -1.0, 1.0);
         rightPower = Range.clip(rightDrive, -1.0, 1.0);
+        telemetry.addData("Crash test 4", "");
         //TEST THIS FIRST, UNTESTED AND WILL MOST LIKELY BURN OUT SERVO
         grabberLeft.setPosition(Range.clip(leftServoInc, 0.0, 0.9));
+        telemetry.addData("Crash test 5", "");
         //gives power to the wheels
         left.setPower(leftPower);
         right.setPower(rightPower);
