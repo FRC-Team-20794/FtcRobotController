@@ -98,10 +98,10 @@ public class trueTankDrive extends OpMode{
         right.setPower(rightPower);
         table.setPower(tablePower);
         //data
+        String encoderTest = Integer.toString(left.getCurrentPosition());
         telemetry.addData("Time spent fleeing:", " " + runtime.toString());
         telemetry.addData("Stats", "");
-        telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
-        telemetry.addData("testing", "(%.2f)", left.getCurrentPosition());
+        telemetry.addData("testing", encoderTest+"");
     }
 
 
