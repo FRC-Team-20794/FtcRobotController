@@ -41,7 +41,8 @@ public class trueTankDrive extends OpMode{
     }
 
     public void start() {
-
+        left.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        right.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void loop() {
@@ -81,7 +82,7 @@ public class trueTankDrive extends OpMode{
             leftServoInc += 0.001;
         }
         else{
-            leftServoInc -= 0.001;
+            leftServoInc = 0.00;
         }
 
         telemetry.addData("Crash test 3", "");
@@ -100,8 +101,8 @@ public class trueTankDrive extends OpMode{
         //data
         String encoderTest = Integer.toString(left.getCurrentPosition());
         telemetry.addData("Time spent fleeing:", " " + runtime.toString());
-        telemetry.addData("Stats", "");
-        telemetry.addData("testing", encoderTest+"");
+        telemetry.addData("Stats", tablePower+"");
+        telemetry.addData("testing", leftServoInc+"");
     }
 
 
