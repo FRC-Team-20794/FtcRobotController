@@ -132,7 +132,7 @@ public class omniSquare extends OpMode{
 
                 ratio = 1.0/frontPower;
                 frontPower = 1.0;
-                leftPower = frontPower*ratio;
+                leftPower = leftPower*ratio;
 
             }
             else{
