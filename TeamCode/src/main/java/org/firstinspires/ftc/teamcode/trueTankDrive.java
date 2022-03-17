@@ -82,10 +82,10 @@ public class trueTankDrive extends OpMode{
             tablePower = 0.0;
         }
         if(xButton){
-            leftServoInc += 0.01;
+            leftServoInc =  0.85;
         }
         else{
-            leftServoInc = 0.2;
+            leftServoInc = 0.25;
         }
 
         //telemetry.addData("Crash test 3", "");
@@ -95,7 +95,7 @@ public class trueTankDrive extends OpMode{
         rightPower = Range.clip(rightDrive, -1.0, 1.0);
         //telemetry.addData("Crash test 4", "");
         //TEST THIS FIRST, UNTESTED AND WILL MOST LIKELY BURN OUT SERVO
-        grabberLeft.setPosition(Range.clip(leftServoInc, 0.0, 0.9));
+        grabberLeft.setPosition(Range.clip(leftServoInc, 0.0, 0.8));
         //telemetry.addData("Crash test 5", "");
         //gives power to the wheels
         left.setPower(leftPower);
@@ -105,7 +105,7 @@ public class trueTankDrive extends OpMode{
         String encoderTest = Integer.toString(left.getCurrentPosition());
         telemetry.addData("Time spent fleeing:", " " + runtime.toString());
         telemetry.addData("Stats", tablePower+"");
-        telemetry.addData("testing", leftServoInc+"");
+        telemetry.addData("testing", table.getCurrentPosition() + "");
         telemetry.addData("gamepad", gamepad1.left_stick_y + "+" + gamepad1.right_stick_y);
         telemetry.addData("left motor", ""+leftDrive);
         telemetry.addData("right motor", rightDrive);
