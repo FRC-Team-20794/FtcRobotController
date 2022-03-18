@@ -52,6 +52,9 @@ public class aidanMecanumDrive extends OpMode{
         double y = gamepad1.left_stick_y;
         boolean quickCount = gamepad1.left_bumper;
         boolean quickClock = gamepad1.right_bumper;
+        double slowCount = gamepad1.left_trigger;
+        double slowClock = gamepad1.right_trigger;
+
         //motor 1 is x+y, motor 2 is x-y. both should value 50.
 
         //for quickturns
@@ -79,18 +82,73 @@ public class aidanMecanumDrive extends OpMode{
             frontRightPower += difference / 2;
             backRightPower = difference / 2;
 
-            if (frontRightPower >= backRightPower) {
-                double speed = Math.hypot(x, y) / frontRightPower;
+            if (Math.abs(frontRightPower) >= Math.abs(backRightPower)) {
+                double speed = Math.hypot(x, y) / Math.abs(frontRightPower);
                 frontRightPower *= speed;
                 backRightPower *= speed;
             } else {
-                double speed = Math.hypot(x, y) / backRightPower;
+                double speed = Math.hypot(x, y) / Math.abs(backRightPower);
                 frontRightPower *= speed;
                 backRightPower *= speed;
             }
 
             backLeftPower = frontRightPower;
             frontLeftPower = backRightPower;
+
+            if(slowClock > 0.01){
+
+                frontRightPower -= slowClock;
+                backRightPower += slowClock;
+                frontLeftPower -= slowClock;
+                backLeftPower += slowClock;
+
+            }else if(slowCount > 0.01){
+
+                frontRightPower += slowCount;
+                backRightPower -= slowCount;
+                frontLeftPower += slowCount;
+                backLeftPower -= slowCount;
+
+            }
+
+        }
+
+        double absfr = Math.abs(frontRightPower);
+        double absfl = Math.abs(frontLeftPower);
+        double absbr = Math.abs(backRightPower);
+        double absbl = Math.abs(backLeftPower);
+
+        if (absfr >= absfl && absfr >= absbl && absfr >= absbr){
+
+            double speed = Math.hypot(x,y)/absfr;
+            frontLeftPower /= speed;
+            frontRightPower /= speed;
+            backLeftPower /= speed;
+            backRightPower /= speed;
+
+        }else if(absfl >= absfr && absfl >= absbl && absfl >= absbr){
+
+            double speed = Math.hypot(x,y)/absfl;
+            frontLeftPower /= speed;
+            frontRightPower /= speed;
+            backLeftPower /= speed;
+            backRightPower /= speed;
+
+        }else if(absbr >= absfr && absbr >= absfl && absbr >= absbl){
+
+            double speed = Math.hypot(x,y)/absbr;
+            frontLeftPower /= speed;
+            frontRightPower /= speed;
+            backLeftPower /= speed;
+            backRightPower /= speed;
+
+        }else{
+
+            double speed = Math.hypot(x,y)/absbl;
+            frontLeftPower /= speed;
+            frontRightPower /= speed;
+            backLeftPower /= speed;
+            backRightPower /= speed;
 
         }
 
