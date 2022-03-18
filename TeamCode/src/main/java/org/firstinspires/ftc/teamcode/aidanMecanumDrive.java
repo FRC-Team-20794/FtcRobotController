@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -26,9 +25,9 @@ public class aidanMecanumDrive extends OpMode{
         backRight = hardwareMap.get(DcMotor.class, "backRight");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("bootup complete", "");
 
@@ -52,24 +51,43 @@ public class aidanMecanumDrive extends OpMode{
         double y = gamepad1.left_stick_y;
         boolean quickCount = gamepad1.left_bumper;
         boolean quickClock = gamepad1.right_bumper;
+        boolean fGreater;
+        double slowCount = gamepad1.left_trigger;
+        double slowClock = gamepad1.right_trigger;
+        boolean countOn = slowCount > 0.01;
+        boolean clockOn = slowClock > 0.01;
         //motor 1 is x+y, motor 2 is x-y. both should value 50.
 
-        //for quickturns
-        if (quickClock || quickCount) {
-            if(quickClock){
+        //for still turns
+        if ((quickClock || quickCount || countOn || clockOn) && (x > 0.01 && y > 0.01)) {
+            if(quickClock || quickCount) {
+                if (quickClock) {
 
-                frontRightPower = 1;
-                backRightPower = -1;
-                frontLeftPower = -1;
-                backLeftPower = 1;
+                    frontRightPower = 1;
+                    backRightPower = -1;
+                    frontLeftPower = -1;
+                    backLeftPower = 1;
 
+                } else {
+
+                    frontRightPower = -1;
+                    backRightPower = 1;
+                    frontLeftPower = 1;
+                    backLeftPower = -1;
+
+                }
             }else{
-
-                frontRightPower = -1;
-                backRightPower = 1;
-                frontLeftPower = 1;
-                backLeftPower = -1;
-
+                if(countOn{
+                    frontRightPower = slowCount;
+                    frontLeftPower = -slowCount;
+                    backLeftPower = slowCount;
+                    backRightPower = -slowCount;
+                }else{
+                    frontRightPower = -slowClock;
+                    frontLeftPower = slowClock;
+                    backLeftPower = -slowClock;
+                    backRightPower = slowClock;
+                }
             }
 // actual code below
         } else {
@@ -83,15 +101,28 @@ public class aidanMecanumDrive extends OpMode{
                 double speed = Math.hypot(x, y) / frontRightPower;
                 frontRightPower *= speed;
                 backRightPower *= speed;
+                fGreater = true;
             } else {
                 double speed = Math.hypot(x, y) / backRightPower;
                 frontRightPower *= speed;
                 backRightPower *= speed;
+                fGreater = false;
             }
 
             backLeftPower = frontRightPower;
             frontLeftPower = backRightPower;
 
+            if(countOn || clockOn){
+                if(fGreater){
+                    frontRightPower /= frontRightPower/0.5;
+                    backRightPower /= frontRightPower/0.5;
+
+                    if(clockOn){
+                        frontRightPower += 0.5;
+                        backRightPower -= 0.5;
+                    }
+                }
+            }
         }
 
         frontLeft.setPower(Range.clip(frontLeftPower, -1, 1));
