@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import java.util.ArrayList;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -55,6 +55,8 @@ public class aidanMecanumDrive extends OpMode{
         double slowCount = gamepad1.left_trigger;
         double slowClock = gamepad1.right_trigger;
 
+        ArrayList<Double> wheels = new ArrayList();
+
         //motor 1 is x+y, motor 2 is x-y. both should value 50.
 
         //for quickturns
@@ -97,59 +99,42 @@ public class aidanMecanumDrive extends OpMode{
 
             if(slowClock > 0.01){
 
-                frontRightPower -= slowClock;
+//                frontRightPower -= slowClock;
                 backRightPower += slowClock;
-                frontLeftPower -= slowClock;
+//                frontLeftPower -= slowClock;
                 backLeftPower += slowClock;
 
             }else if(slowCount > 0.01){
 
                 frontRightPower += slowCount;
-                backRightPower -= slowCount;
+//                backRightPower -= slowCount;
                 frontLeftPower += slowCount;
-                backLeftPower -= slowCount;
+//                backLeftPower -= slowCount;
 
             }
 
         }
 
-        double absfr = Math.abs(frontRightPower);
-        double absfl = Math.abs(frontLeftPower);
-        double absbr = Math.abs(backRightPower);
-        double absbl = Math.abs(backLeftPower);
+        wheels.add(frontLeftPower);
+        wheels.add(frontRightPower);
+        wheels.add(backLeftPower);
+        wheels.add(backRightPower);
+        double most = 0;
 
-        if (absfr >= absfl && absfr >= absbl && absfr >= absbr){
+        for (int i = 0; i < 4; i++) {
+            if(Math.abs(wheels.get(i))>most){
+                most = Math.abs(wheels.get(i));
+            }
+        }
 
-            double speed = Math.hypot(x,y)/absfr;
-            frontLeftPower /= speed;
-            frontRightPower /= speed;
-            backLeftPower /= speed;
-            backRightPower /= speed;
+        if(most == 0){
 
-        }else if(absfl >= absfr && absfl >= absbl && absfl >= absbr){
-
-            double speed = Math.hypot(x,y)/absfl;
-            frontLeftPower /= speed;
-            frontRightPower /= speed;
-            backLeftPower /= speed;
-            backRightPower /= speed;
-
-        }else if(absbr >= absfr && absbr >= absfl && absbr >= absbl){
-
-            double speed = Math.hypot(x,y)/absbr;
-            frontLeftPower /= speed;
-            frontRightPower /= speed;
-            backLeftPower /= speed;
-            backRightPower /= speed;
-
-        }else{
-
-            double speed = Math.hypot(x,y)/absbl;
-            frontLeftPower /= speed;
-            frontRightPower /= speed;
-            backLeftPower /= speed;
-            backRightPower /= speed;
-
+        }else {
+            double speed = Math.hypot(x,y)/most;
+            frontLeftPower *= speed;
+            frontRightPower *= speed;
+            backRightPower *= speed;
+            backLeftPower *= speed;
         }
 
         frontLeft.setPower(Range.clip(frontLeftPower, -1, 1));
