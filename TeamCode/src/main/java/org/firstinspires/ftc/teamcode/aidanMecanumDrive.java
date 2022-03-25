@@ -43,6 +43,7 @@ public class aidanMecanumDrive extends OpMode{
     }
 
     public void loop() {
+        telemetry.addData("Time In use", runtime +"");
         double frontLeftPower;
         double frontRightPower;
         double backLeftPower;
@@ -128,7 +129,6 @@ public class aidanMecanumDrive extends OpMode{
         }
 
         if(most == 0){
-
         }else {
             double speed = Math.hypot(x,y)/most;
             frontLeftPower *= speed;
