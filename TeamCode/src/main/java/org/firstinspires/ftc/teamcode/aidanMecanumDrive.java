@@ -128,8 +128,7 @@ public class aidanMecanumDrive extends OpMode{
             }
         }
 
-        if(most == 0){
-        }else {
+        if(most != 0){
             double speed = Math.hypot(x,y)/most;
             frontLeftPower *= speed;
             frontRightPower *= speed;
