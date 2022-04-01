@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import java.util.ArrayList;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "Mecanum Drive", group = "mecanum drive")
+import java.util.ArrayList;
+
+@TeleOp(name = "Mecanum Drive 2 electric boogaloo", group = "mecanum drive")
 
 public class aidanMecanumDrive extends OpMode{
 
@@ -26,9 +27,9 @@ public class aidanMecanumDrive extends OpMode{
         backRight = hardwareMap.get(DcMotor.class, "backRight");
 
         frontLeft.setDirection(DcMotor.Direction.REVERSE);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.FORWARD);
 
         telemetry.addData("bootup complete", "");
 
@@ -49,7 +50,7 @@ public class aidanMecanumDrive extends OpMode{
         double backLeftPower;
         double backRightPower;
 
-        double x = gamepad1.left_stick_x;
+        double x = -gamepad1.left_stick_x;
         double y = gamepad1.left_stick_y;
         boolean quickCount = gamepad1.left_bumper;
         boolean quickClock = gamepad1.right_bumper;
