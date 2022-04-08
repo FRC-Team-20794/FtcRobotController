@@ -88,6 +88,9 @@ public class mecanumDrive extends OpMode{
                 backLeft.setPower(RT);
                 backRight.setPower(RT);
 
+                if(LT>0 || 0<RT){
+
+                }
 
             frontPort = frontPort1;
             frontStarboard = frontStarboard1;
