@@ -63,19 +63,20 @@ public class aidanMecanumDrive extends OpMode{
 
         //for quickturns
         if (quickClock || quickCount) {
-            if(quickClock){
+            telemetry.addData("quickturn on","");
+            if(quickCount){
 
-                frontRightPower = 1;
-                backRightPower = -1;
-                frontLeftPower = -1;
-                backLeftPower = 1;
+                frontRightPower = -1.0;
+                backRightPower = 1.0;
+                frontLeftPower = -1.0;
+                backLeftPower = 1.0;
 
             }else{
 
-                frontRightPower = -1;
-                backRightPower = 1;
-                frontLeftPower = 1;
-                backLeftPower = -1;
+                frontRightPower = 1.0;
+                backRightPower = -1.0;
+                frontLeftPower = 1.0;
+                backLeftPower = -1.0;
 
             }
 // actual code below
@@ -115,28 +116,30 @@ public class aidanMecanumDrive extends OpMode{
 
             }
 
-        }
 
-        wheels.add(frontLeftPower);
-        wheels.add(frontRightPower);
-        wheels.add(backLeftPower);
-        wheels.add(backRightPower);
-        double most = 0;
+            wheels.add(frontLeftPower);
+            wheels.add(frontRightPower);
+            wheels.add(backLeftPower);
+            wheels.add(backRightPower);
+            double most = 0;
 
-        for (int i = 0; i < 4; i++) {
-            if(Math.abs(wheels.get(i))>most){
-                most = Math.abs(wheels.get(i));
+            for (int i = 0; i < 4; i++) {
+                if(Math.abs(wheels.get(i))>most){
+                    most = Math.abs(wheels.get(i));
+                }
+            }
+
+            if(most != 0){
+                double speed = Math.hypot(x,y)/most;
+                frontLeftPower *= speed;
+                frontRightPower *= speed;
+                backRightPower *= speed;
+                backLeftPower *= speed;
             }
         }
 
-        if(most != 0){
-            double speed = Math.hypot(x,y)/most;
-            frontLeftPower *= speed;
-            frontRightPower *= speed;
-            backRightPower *= speed;
-            backLeftPower *= speed;
-        }
 
+        telemetry.addData("power set",frontLeftPower+"");
         frontLeft.setPower(Range.clip(frontLeftPower, -1, 1));
         frontRight.setPower(Range.clip(frontRightPower, -1, 1));
         backLeft.setPower(Range.clip(backLeftPower, -1, 1));

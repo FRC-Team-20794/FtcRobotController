@@ -64,8 +64,8 @@ public class mecanumDrive extends OpMode{
         double backStarboard;
         boolean ducks = gamepad2.right_bumper;
         double ducks2;
-        boolean LB;
-        boolean RB;
+        float LT;
+        float RT;
 
         //getting stick inputs + right stick directional drift
         frontPort1 = (gamepad1.left_stick_y);
@@ -73,23 +73,21 @@ public class mecanumDrive extends OpMode{
         backPort1 = (-1*(gamepad1.left_stick_y));
         backStarboard1 = (gamepad1.left_stick_y);
 
-        LB = gamepad1.left_bumper;
-        RB = gamepad1.right_bumper;
+        LT = gamepad1.left_trigger;
+        RT = gamepad1.right_trigger;
 
         //setting power max of driving and drift
 
-            if(LB){
-                frontPort1 = -1.0;
-                frontStarboard1 = 1.0;
-                backPort1 = -1.0;
-                backStarboard1 = 1.0;}
+                frontLeft.setPower(LT);
+                frontRight.setPower(LT);
+                backLeft.setPower(-LT);
+                backRight.setPower(-LT);
 
-            if(RB){
-                frontPort1 = -1.0;
-                frontStarboard1 = -11.0;
-                backPort1 = 1.0;
-                backStarboard1 = 1.0;
-            }
+                frontLeft.setPower(-RT);
+                frontRight.setPower(-RT);
+                backLeft.setPower(RT);
+                backRight.setPower(RT);
+
 
             frontPort = frontPort1;
             frontStarboard = frontStarboard1;
@@ -100,6 +98,7 @@ public class mecanumDrive extends OpMode{
             frontRight.setPower(frontStarboard);
             backLeft.setPower(backPort);
             backRight.setPower(backStarboard);
+
 
         /*if(ducks){
             ducks2 = 1.0;
