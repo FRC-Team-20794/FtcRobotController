@@ -79,14 +79,10 @@ public class mecanumDrive extends OpMode{
         //setting power max of driving and drift
 
             if(LB){
-                frontPort2 = -1.0;
-                frontStarboard2 = 1.0;
-                backPort2 = -1.0;
-                backStarboard2 = 1.0;}
-
-            else{
-
-            }
+                frontPort1 = -1.0;
+                frontStarboard1 = 1.0;
+                backPort1 = -1.0;
+                backStarboard1 = 1.0;}
 
             if(RB){
                 frontPort1 = -1.0;
@@ -95,18 +91,10 @@ public class mecanumDrive extends OpMode{
                 backStarboard1 = 1.0;
             }
 
-            else{
-
-            }
-
             frontPort = frontPort1;
             frontStarboard = frontStarboard1;
             backPort = backPort1;
             backStarboard = backStarboard1;
-            frontPort1 = frontPort2;
-            frontStarboard1 = frontStarboard2;
-            backPort1 = backPort2;
-            backStarboard1 = backStarboard2;
 
             frontLeft.setPower(frontPort);
             frontRight.setPower(frontStarboard);
